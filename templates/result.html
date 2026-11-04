@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>診断結果 | Career Compass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="/"><span class="brand-mark">C</span> CAREER COMPASS</a><a class="back-link" href="/">← 診断に戻る</a></header>
+  <main class="result-main">
+    <section class="result-hero">
+      <p class="eyebrow">02 / YOUR CAREER SNAPSHOT</p>
+      <h1>{{ result.name }}さんの<br><em>キャリアのヒント</em></h1>
+      <p>入力内容をもとに、現在の仕事の特徴と次の選択肢を整理しました。</p>
+    </section>
+
+    <section class="snapshot-grid">
+      <article class="snapshot-card">
+        <span class="card-label">CURRENT FIELD</span><strong>{{ result.job }}</strong><small>現在の職業・経験</small>
+      </article>
+      <article class="snapshot-card">
+        <span class="card-label">YOUR INTEREST</span><strong>{{ result.interest }}</strong><small>興味・関心</small>
+      </article>
+      <article class="snapshot-card">
+        <span class="card-label">NEXT GOAL</span><strong>{{ result.goal }}</strong><small>これからの目標</small>
+      </article>
+    </section>
+
+    <section class="analysis-panel">
+      <div class="panel-heading"><div><p class="eyebrow">03 / TASK CHANGE</p><h2>仕事の中身は、どう変わる？</h2></div><span class="tag">参考指標</span></div>
+      <div class="exposure-layout">
+        <div class="score-wrap">
+          <div class="score" style="--score: {{ result.exposure }};"><strong>{{ result.exposure }}<small>/100</small></strong></div>
+          <b>定型業務の自動化への接触度</b>
+          <span class="score-level">{{ result.level }}</span>
+        </div>
+        <div class="score-explain">
+          <p>これは職業がなくなる確率ではなく、一般的な業務のうち、デジタル技術で補助・自動化される可能性があるタスクの目安です。</p>
+          <p>同じ職業でも、職場や担当業務、経験によって影響は大きく異なります。人の判断や対話が必要な仕事にも注目しましょう。</p>
+        </div>
+      </div>
+      <div class="task-columns">
+        <div class="task-box automated"><h3><span>↗</span> 自動化・効率化されやすい業務例</h3><ul>{% for item in result.automatable %}<li>{{ item }}</li>{% endfor %}</ul></div>
+        <div class="task-box human"><h3><span>✳</span> 人の強みを活かしやすい業務例</h3><ul>{% for item in result.human %}<li>{{ item }}</li>{% endfor %}</ul></div>
+      </div>
+    </section>
+
+    <section class="skills-section">
+      <div class="panel-heading"><div><p class="eyebrow">04 / SKILLS TO GROW</p><h2>これから伸ばしたいスキル</h2></div></div>
+      <div class="skill-list">{% for skill in result.skills %}<div class="skill-item"><span class="skill-number">0{{ loop.index }}</span><strong>{{ skill }}</strong><span class="skill-arrow">↗</span></div>{% endfor %}</div>
+    </section>
+
+    <section class="paths-section">
+      <div class="panel-heading"><div><p class="eyebrow">05 / POSSIBLE DIRECTIONS</p><h2>考えられるキャリアの選択肢</h2></div></div>
+      <p class="section-intro">今の経験と興味を組み合わせた候補です。仕事内容や必要条件を調べ、自分に合うか確かめてみましょう。</p>
+      <div class="path-grid">{% for path in result.paths %}<article class="path-card"><span>OPTION 0{{ loop.index }}</span><h3>{{ path }}</h3><p>必要なスキル・求人条件を調べ、小さな学習や体験から相性を確認しましょう。</p></article>{% endfor %}</div>
+    </section>
+
+    <section class="roadmap-section">
+      <div class="panel-heading"><div><p class="eyebrow">06 / YOUR ACTION PLAN</p><h2>今日からできる4つのステップ</h2></div></div>
+      <ol class="roadmap">{% for step in result.steps %}<li><span>{{ loop.index }}</span><p>{{ step }}</p></li>{% endfor %}</ol>
+    </section>
+
+    <section class="disclaimer"><strong>大切なお知らせ</strong><p>この結果は、一般的な業務例を使った簡易的な参考情報です。雇用や賃金、職業の将来を予測・保証するものではありません。実際の転職判断では、最新の求人票、職業訓練情報、公的なキャリア相談なども確認してください。</p></section>
+    <div class="result-actions"><a class="primary-button" href="/">もう一度診断する <span>↻</span></a><button class="secondary-button" onclick="window.print()">結果を印刷・PDF保存</button></div>
+  </main>
+  <footer><span>CAREER COMPASS</span><span>Small steps. New possibilities.</span></footer>
+</body>
+</html>

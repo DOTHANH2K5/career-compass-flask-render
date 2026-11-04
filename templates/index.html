@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="経験や興味を整理して、これからのキャリアの選択肢を考える無料ガイド">
+  <title>Career Compass | キャリア方向性ガイド</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/"><span class="brand-mark">C</span> CAREER COMPASS</a>
+    <span class="header-note">YOUR NEXT STEP STARTS HERE</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow"><span></span> CAREER GUIDE FOR THE AI ERA</p>
+        <h1>未来の仕事を、<br><em>自分で選ぶ。</em></h1>
+        <p class="hero-lead">AI時代に必要なのは、未来を怖がることより、変化を知って次の一歩を考えること。あなたの経験と興味から、キャリアのヒントを整理します。</p>
+        <div class="hero-points">
+          <span>✓ 無料で使える</span><span>✓ 登録不要</span><span>✓ APIキー不要</span>
+        </div>
+      </div>
+      <div class="hero-visual" aria-label="キャリアの道筋を表すイラスト">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="visual-core"><span>YOUR</span><strong>NEXT<br>MOVE</strong><small>EXPLORE · LEARN · GROW</small></div>
+        <div class="float-card card-top"><span class="mini-icon">↗</span><div><b>可能性を広げる</b><small>新しい選択肢を発見</small></div></div>
+        <div class="float-card card-bottom"><span class="mini-icon">✳</span><div><b>強みを見つける</b><small>経験は次の仕事につながる</small></div></div>
+        <div class="spark spark-a">✦</div><div class="spark spark-b">✧</div>
+      </div>
+    </section>
+
+    <section class="form-section" id="diagnosis">
+      <div class="section-heading">
+        <p class="eyebrow">01 / ABOUT YOU</p>
+        <h2>まずは、今のあなたを教えてください。</h2>
+        <p>正解はありません。分かる範囲で入力すれば大丈夫です。</p>
+      </div>
+      <form action="{{ url_for('diagnosis') }}" method="post" class="diagnosis-form">
+        <div class="form-grid">
+          <label class="field">
+            <span>お名前 <small>任意</small></span>
+            <input type="text" name="name" maxlength="40" placeholder="例：山田 太郎">
+          </label>
+          <label class="field">
+            <span>現在の職業・経験に近いもの <b>*</b></span>
+            <select name="current_job" required>
+              {% for job in jobs %}<option value="{{ job }}">{{ job }}</option>{% endfor %}
+            </select>
+          </label>
+          <label class="field">
+            <span>興味があること <b>*</b></span>
+            <select name="interest" required>
+              {% for interest in interests %}<option value="{{ interest }}">{{ interest }}</option>{% endfor %}
+            </select>
+          </label>
+          <label class="field">
+            <span>経験年数・現在の状況</span>
+            <select name="experience">
+              <option>これから経験を積みたい</option>
+              <option>経験1年未満</option>
+              <option>経験1〜3年</option>
+              <option>経験4〜7年</option>
+              <option>経験8年以上</option>
+              <option>ブランクから復帰したい</option>
+            </select>
+          </label>
+          <label class="field full">
+            <span>持っているスキル・得意なこと <small>任意</small></span>
+            <textarea name="skills" rows="3" maxlength="500" placeholder="例：接客、Excel、文章作成、人と話すこと など"></textarea>
+            <small class="field-hint"><span id="char-count">0</span> / 500文字</small>
+          </label>
+          <label class="field full">
+            <span>今後の目標</span>
+            <select name="goal">
+              <option>方向性を見つけたい</option>
+              <option>今の仕事でスキルアップしたい</option>
+              <option>異業種へ転職したい</option>
+              <option>初めての仕事に挑戦したい</option>
+              <option>働き方を見直したい</option>
+            </select>
+          </label>
+        </div>
+        <div class="form-footer">
+          <p><span class="required">*</span> 必須項目　入力内容はこの診断処理にのみ使用します。</p>
+          <button class="primary-button" type="submit">キャリアのヒントを見る <span>→</span></button>
+        </div>
+      </form>
+    </section>
+    <section class="info-strip">
+      <div class="info-icon">i</div>
+      <p><strong>この診断について</strong><br>職業の将来性を断定するものではありません。仕事の中のタスクに注目し、学び直しやキャリア選択を考えるための出発点としてご利用ください。</p>
+    </section>
+  </main>
+  <footer><span>CAREER COMPASS</span><span>Small steps. New possibilities.</span></footer>
+</body>
+</html>
